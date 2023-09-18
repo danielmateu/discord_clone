@@ -12,4 +12,5 @@
    npx prisma studio -> Para ver las tablas
 
 6. React Hook Form
-7. Zustand
+7. uploadthing
+8. react-dropzone
