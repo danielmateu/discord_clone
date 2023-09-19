@@ -18,4 +18,6 @@
 9. Axios
 10. UUID
 
+11. Zustand
+
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
