@@ -14,3 +14,7 @@
 6. React Hook Form
 7. uploadthing
 8. react-dropzone
+
+9. Axios
+
+Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
