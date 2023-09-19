@@ -27,7 +27,7 @@ model Server {
   id         String @id @default(uuid())
   name       String
   imageUrl   String @db.Text
-  inviteCode String @db.Text
+  inviteCode String @unique
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -88,6 +88,8 @@ model Channel {
   @@index([serverId])
 }
 
+// DUDE AI
+
 model Category {
   id    String @id @default(uuid())
   name  String
@@ -108,9 +110,9 @@ model Dude {
   categoryId   String
   category     Category  @relation(fields: [categoryId], references: [id])
   messages     Message[]
+  // @@fulltext([name])
 
   @@index([categoryId])
-  // @@fulltext([name])
 }
 
 model UserSubscription {
@@ -147,5 +149,3 @@ enum Role {
   user
   system
 }
-
-

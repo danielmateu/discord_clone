@@ -20,7 +20,7 @@ import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Se requiere un nombre para el servidor ' }),
-    imageurl: z.string().min(1, { message: 'Se requiere una imagen para el servidor ' })
+    imageUrl: z.string().min(1, { message: 'Se requiere una imagen para el servidor ' })
 })
 
 
@@ -38,16 +38,16 @@ export const InitialModal = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
-            imageurl: ''
+            imageUrl: ''
         }
     })
 
     const isLoading = form.formState.isSubmitting
 
-    const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        // console.log(data)
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        // console.log(values)
         try {
-            await axios.post('/api/servers', data)
+            await axios.post('/api/servers', values)
 
             form.reset()
             router.refresh()
@@ -77,7 +77,7 @@ export const InitialModal = () => {
                             <div className="flex items-center justify-center text-center">
                                 <FormField
                                     control={form.control}
-                                    name='imageurl'
+                                    name='imageUrl'
                                     render={({ field, formState }) => (
                                         <FormItem>
                                             <FormControl>
