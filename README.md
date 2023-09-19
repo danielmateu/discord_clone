@@ -16,5 +16,6 @@
 8. react-dropzone
 
 9. Axios
+10. UUID
 
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
