@@ -9,6 +9,8 @@ import { db } from "@/lib/db"
 import { ServerHeader } from "./ServerHeader"
 import { ScrollArea } from "../ui/scroll-area"
 import { ServerSearch } from "./ServerSearch"
+import { Separator } from "../ui/separator"
+import { ServerSection } from "./ServerSection"
 
 interface ServerSidebarProps {
     serverId: string
@@ -120,6 +122,17 @@ export const ServerSidebar = async ({
                         ]}
                     />
                 </div>
+                <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2" />
+                {!!textChannels?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="channels"
+                            channelType={ChannelType.TEXT}
+                            role={role}
+                            label="Canales de Texto"
+                        />
+                    </div>
+                )}
             </ScrollArea>
         </div>
     )
