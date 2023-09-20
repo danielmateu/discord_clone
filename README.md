@@ -19,6 +19,7 @@
 10. UUID
 
 11. Zustand
+12. Query-String
 
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
 https://github.com/AntonioErdeljac/next13-discord-clone

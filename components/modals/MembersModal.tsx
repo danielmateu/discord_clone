@@ -1,96 +1,159 @@
 'use client'
 
-// import { useRouter } from "next/navigation"
+import { useState } from 'react';
+import { MemberRole } from '@prisma/client';
+
+import { ServerWithMembersWithProfiles } from "@/types"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle }
     from "../ui/dialog"
 
-import { useModal } from "@/hooks/use-modal-store"
-import { Label } from "../ui/label"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
-import { Check, Copy, RefreshCcw } from "lucide-react"
-import { useOrigin } from "@/hooks/use-origin"
-import { useState } from 'react';
-import axios from "axios"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger
+} from "../ui/dropdown-menu"
 
+import { ScrollArea } from "../ui/scroll-area"
+
+import { Check, Gavel, Loader2, MoreVertical, Shield, ShieldAlert, ShieldCheck, ShieldQuestion } from "lucide-react"
+
+import { useModal } from "@/hooks/use-modal-store"
+import { UserAvatar } from "../UserAvatar"
+
+import qs from 'query-string'
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
+
+const roleIconMap = {
+    'GUEST': null,
+    'MODERATOR': <ShieldCheck className="w-4 h-4 ml-2 text-indigo-500" />,
+    'ADMIN': <ShieldAlert className="w-4 h-4 ml-2 text-rose-500" />
+}
 
 export const MembersModal = () => {
 
     const { onOpen, isOpen, onClose, type, data } = useModal()
-    const origin = useOrigin()
+
+    const [loadingId, setLoadingId] = useState('')
 
     const isModalOpen = isOpen && type === 'members'
-    const { server } = data
+    const { server } = data as { server: ServerWithMembersWithProfiles }
 
-    const [copied, setCopied] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
-    const inviteUrl = `${origin}/invite/${server?.inviteCode}`
-
-    const onCopy = () => {
-        navigator.clipboard.writeText(inviteUrl)
-        setCopied(true)
-
-        setTimeout(() => {
-            setCopied(false)
-        }, 2000)
-
-    }
-
-    // Genrate a new invite code
-    const onGenerate = async () => {
+    const onRoleChange = async (memberId: string, role: MemberRole) => {
         try {
-            setIsLoading(true)
+            setLoadingId(memberId)
 
-            const response = await axios.patch(`/api/servers/${server?.id}/invite-code`)
+            const url = qs.stringifyUrl({
+                url: `/api/members/${memberId}`,
+                query: {
+                    serverId: server?.id,
+                    memberId
+                },
+            })
 
-            onOpen('invite', { server: response.data })
+            const response = await axios.patch(url, { role })
+
+            router.refresh()
+            onOpen('members', { server: response.data })
 
         } catch (error) {
             console.log(error);
         } finally {
-            setIsLoading(false)
+            setLoadingId('')
         }
     }
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
-            <DialogContent className="bg-white text-black p-0 overflow-hidden">
+            <DialogContent className="bg-white text-black overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-semibold">
-                        Invita a tus amigos
+                        Gestionar miembros
                     </DialogTitle>
-                    {/* <DialogDescription className="text-center text-zinc-500">
-                        Invita a un amigo a unirse a tu servidor
-                    </DialogDescription> */}
+                    <DialogDescription
+                        className="text-center text-zinc-500"
+                    >
+                        {server?.members?.length} miembros
+                    </DialogDescription>
                 </DialogHeader>
-                <div className="p-6">
-                    <Label className="uppercase text-xs font-semibold text-zinc-500 dark:text-secondary/70">
-                        Enlace de invitación
-                    </Label>
-                    <div className="flex items-center mt-2 gap-x-2">
-                        <Input
-                            disabled={isLoading}
-                            className="bg-zinc-300/50 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-black"
-                            value={inviteUrl}
-                            onChange={() => { }}
-                        />
-                        <Button
-                            disabled={isLoading}
-                            onClick={onCopy}
-                            size='icon'>
-                            {copied ? <Check className="w-4 h-4 text-green-600 font-bold" /> : <Copy className="w-4 h-4" />}
-
-                        </Button>
-                    </div>
-                    <Button
-                        onClick={onGenerate}
-                        disabled={isLoading}
-                        size={'sm'} variant={'link'} className="text-xs text-zinc-500 mt-4">
-                        Genera un nuevo enlace
-                        <RefreshCcw className="w-4 h-4 ml-2" />
-                    </Button>
-                </div>
+                <ScrollArea
+                    className="mt-8 max-h-[420px] pr-6"
+                >
+                    {server?.members?.map(member => (
+                        <div
+                            key={member.id}
+                            className="flex items-center gap-x-2 mb-6">
+                            <UserAvatar src={member.profile.imageUrl} />
+                            <div className="flex flex-col gap-y-1">
+                                <div className="flex items-center text-xs font-semibold">
+                                    {member.profile.name}
+                                    {roleIconMap[member.role]}
+                                </div>
+                                <p className="text-xs text-zinc-500">{member.profile.email}</p>
+                            </div>
+                            {server.profileId !== member.profile.id && loadingId !== member.id && (
+                                <div className="ml-auto">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <MoreVertical className="w-4 h-4 text-zinc-500" />
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent side='left'>
+                                            <DropdownMenuSub>
+                                                <DropdownMenuSubTrigger className='flex items-center'>
+                                                    <ShieldQuestion className='w-4 h-4 mr-2' />
+                                                    <span>Role</span>
+                                                </DropdownMenuSubTrigger>
+                                                <DropdownMenuPortal>
+                                                    <DropdownMenuSubContent>
+                                                        <DropdownMenuItem
+                                                            onClick={() => onRoleChange(member.id, 'GUEST')}
+                                                        >
+                                                            <Shield className='h-4 w-4 ml-1 mr-1' />
+                                                            Invitado
+                                                            {member.role === 'GUEST' && (
+                                                                <Check
+                                                                    className='h-4 w-4 ml-auto '
+                                                                />
+                                                            )}
+                                                        </DropdownMenuItem>
+                                                        <DropdownMenuItem
+                                                            onClick={() => onRoleChange(member.id, 'MODERATOR')}
+                                                        >
+                                                            <ShieldCheck className='h-4 w-4 ml-1 mr-1' />
+                                                            Moderador
+                                                            {member.role === 'MODERATOR' && (
+                                                                <Check
+                                                                    className='h-4 w-4 ml-auto '
+                                                                />
+                                                            )}
+                                                        </DropdownMenuItem>
+                                                    </DropdownMenuSubContent>
+                                                </DropdownMenuPortal>
+                                            </DropdownMenuSub>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem >
+                                                <Gavel className='h-4 w-4 mr-2' />
+                                                Expulsar
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </div>
+                            )}
+                            {loadingId === member.id && (
+                                <Loader2 className='animate-spin text-zinc-500 ml-auto w-4 h-4' />
+                            )}
+                        </div>
+                    ))}
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     )
