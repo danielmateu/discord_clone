@@ -14,6 +14,7 @@ import {
     CommandShortcut,
 } from "@/components/ui/command"
 import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 
 
 interface ServerSearchProps {
@@ -33,6 +34,9 @@ export const ServerSearch = ({
 
     const [open, setOpen] = useState(false)
 
+    const router = useRouter()
+    const params = useParams()
+
     useEffect(() => {
         const down = (e: KeyboardEvent) => {
             if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
@@ -45,6 +49,18 @@ export const ServerSearch = ({
 
         return () => document.removeEventListener('keydown', down)
     }, [])
+
+    const onClick = ({ id, type }: { id: string, type: 'channel' | 'member' }) => {
+        setOpen(false)
+
+        if (type === 'member') {
+            return router.push(`/servers/${params?.serverId}/conversations/${id}`)
+        }
+
+        if (type === 'channel') {
+            return router.push(`/servers/${params?.serverId}/channels/${id}`)
+        }
+    }
 
 
     return (
@@ -84,7 +100,7 @@ export const ServerSearch = ({
                                         data.map(({ icon, name, id }) => (
                                             <CommandItem
                                                 key={id}
-                                            // icon={icon}
+                                                onSelect={() => onClick({ id, type })}
                                             >
                                                 {icon}
                                                 <span>{name}</span>
