@@ -11,6 +11,7 @@ import { ScrollArea } from "../ui/scroll-area"
 import { ServerSearch } from "./ServerSearch"
 import { Separator } from "../ui/separator"
 import { ServerSection } from "./ServerSection"
+import { ServerChannel } from "./ServerChannel"
 
 interface ServerSidebarProps {
     serverId: string
@@ -131,6 +132,14 @@ export const ServerSidebar = async ({
                             role={role}
                             label="Canales de Texto"
                         />
+                        {textChannels.map((channel) => (
+                            <ServerChannel
+                                key={channel.id}
+                                channel={channel}
+                                server={server}
+                            />
+                        ))}
+
                     </div>
                 )}
             </ScrollArea>
