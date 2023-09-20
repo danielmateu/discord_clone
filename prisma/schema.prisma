@@ -89,7 +89,6 @@ model Channel {
 }
 
 // DUDE AI
-
 model Category {
   id    String @id @default(uuid())
   name  String

@@ -5,6 +5,7 @@ import { X } from 'lucide-react'
 import Image from "next/image"
 
 import '@uploadthing/react/styles.css'
+import { ActionTooltip } from "./ActionTooltip"
 
 interface FileUploadProps {
     onChange: (url?: string) => void
@@ -27,14 +28,21 @@ export const FileUpload = ({
                     fill
                     src={value}
                     alt='Imagen Cargada'
-                    className="rounded-full hover:scale-105 transition"
+                    className="rounded-full"
                 />
-                <button
-                    onClick={() => onChange('')}
-                    className="bg-rose-500 text-white rounded-full absolute top-0 right-0 shadow-sm hover:rotate-12 transition" type="button"
+                <ActionTooltip
+                    label="Eliminar imagen"
+                    side="right"
+                    align="center"
                 >
-                    <X className="h-4 w-4" />
-                </button>
+
+                    <button
+                        onClick={() => onChange('')}
+                        className="bg-rose-500 text-white rounded-full absolute top-0 right-0 shadow-sm hover:rotate-90 transition" type="button"
+                    >
+                        <X className="h-4 w-4" />
+                    </button>
+                </ActionTooltip>
             </div>
         )
     }

@@ -24,8 +24,6 @@ const formSchema = z.object({
     imageUrl: z.string().min(1, { message: 'Se requiere una imagen para el servidor ' })
 })
 
-
-
 export const CreateServerModal = () => {
 
     const { isOpen, onClose, type } = useModal()

@@ -21,3 +21,4 @@
 11. Zustand
 
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
+https://github.com/AntonioErdeljac/next13-discord-clone
