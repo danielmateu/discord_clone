@@ -85,6 +85,7 @@ export const ServerHeader = ({
                 )}
                 {!isAdmin && (
                     <DropdownMenuItem
+                        onClick={() => onOpen('leave-server', { server })}
                         className="px-3 py-2 text-sm cursor-pointer hover:text-rose-500 "
                     >
                         Abandona el servidor
