@@ -2,6 +2,7 @@
 
 
 import { useForm } from "react-hook-form"
+import { useToast } from "@/components/ui/use-toast"
 
 import axios from 'axios'
 import * as z from 'zod'
@@ -31,6 +32,7 @@ export const EditServerModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
+    const { toast } = useToast()
 
     const isModalOpen = isOpen && type === 'edit-server'
     const { server } = data
@@ -57,12 +59,19 @@ export const EditServerModal = () => {
         // console.log(values)
         try {
             await axios.patch(`/api/servers/${server?.id}`, values)
-
+            toast({
+                title: 'Servidor actualizado',
+                description: 'Tu servidor ha sido actualizado correctamente'
+            })
             form.reset()
             router.refresh()
             onClose()
         } catch (error) {
             console.log(error)
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al actualizar el servidor'
+            })
         }
     }
 

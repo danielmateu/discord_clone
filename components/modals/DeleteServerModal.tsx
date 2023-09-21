@@ -12,10 +12,13 @@ import { useState } from 'react';
 import axios from "axios"
 import { useRouter } from "next/navigation";
 
+import { useToast } from "@/components/ui/use-toast"
+
 export const DeleteServerModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
+    const { toast } = useToast()
 
     const isModalOpen = isOpen && type === 'delete-server'
     const { server } = data
@@ -27,12 +30,20 @@ export const DeleteServerModal = () => {
             setIsLoading(true)
 
             await axios.delete(`/api/servers/${server?.id}`)
-            onClose()
+            toast({
+                title: 'Servidor eliminado',
+                description: 'Tu servidor ha sido eliminado correctamente'
+            })
             router.refresh()
             router.push('/')
+            onClose()
 
         } catch (error) {
             console.log(error);
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al eliminar el servidor'
+            })
         } finally {
             setIsLoading(false)
         }

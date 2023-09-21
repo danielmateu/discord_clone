@@ -26,6 +26,8 @@ import { useModal } from "@/hooks/use-modal-store"
 import { ChannelType } from "@prisma/client"
 import { useEffect } from "react"
 
+import { useToast } from "@/components/ui/use-toast"
+
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Se requiere un nombre para el canal' }).refine(name => name !== 'general',
@@ -40,6 +42,7 @@ export const CreateChannelModal = () => {
 
     const router = useRouter()
     const params = useParams()
+    const { toast } = useToast()
 
     const { channelType } = data
 
@@ -74,12 +77,19 @@ export const CreateChannelModal = () => {
                 }
             })
             await axios.post(url, values)
-
+            toast({
+                title: 'Canal creado',
+                description: 'El canal se ha creado correctamente'
+            })
             form.reset()
             router.refresh()
             onClose()
         } catch (error) {
             console.log(error)
+            toast({
+                title: 'Error',
+                description: 'No se pudo crear el canal',
+            })
         }
     }
 

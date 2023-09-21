@@ -30,6 +30,9 @@ import qs from 'query-string'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
+import { useToast } from "@/components/ui/use-toast"
+
+
 
 const roleIconMap = {
     'GUEST': null,
@@ -40,6 +43,7 @@ const roleIconMap = {
 export const MembersModal = () => {
 
     const { onOpen, isOpen, onClose, type, data } = useModal()
+    const { toast } = useToast()
 
     const [loadingId, setLoadingId] = useState('')
 
@@ -60,12 +64,20 @@ export const MembersModal = () => {
             })
 
             const response = await axios.delete(url)
+            toast({
+                title: 'Miembro expulsado',
+                description: 'El miembro ha sido expulsado correctamente'
+            })
 
             router.refresh()
 
             onOpen('members', { server: response.data })
         } catch (error) {
             console.log(error)
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al expulsar al miembro'
+            })
         } finally {
             setLoadingId('')
         }
@@ -85,11 +97,20 @@ export const MembersModal = () => {
 
             const response = await axios.patch(url, { role })
 
+            toast({
+                title: 'Rol cambiado',
+                description: 'El rol del miembro ha sido cambiado correctamente'
+            })
+
             router.refresh()
             onOpen('members', { server: response.data })
 
         } catch (error) {
             console.log(error);
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al cambiar el rol del miembro'
+            })
         } finally {
             setLoadingId('')
         }

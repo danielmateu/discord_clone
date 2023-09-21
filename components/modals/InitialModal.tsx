@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle }
     from "../ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
-
+import { useToast } from "@/components/ui/use-toast"
 
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
@@ -29,6 +29,7 @@ export const InitialModal = () => {
 
     const [isMounted, setIsMounted] = useState(false)
     const router = useRouter()
+    const { toast } = useToast()
 
     useEffect(() => {
         setIsMounted(true)
@@ -48,13 +49,20 @@ export const InitialModal = () => {
         // console.log(values)
         try {
             await axios.post('/api/servers', values)
-
+            toast({
+                title: 'Servidor creado',
+                description: 'Tu servidor ha sido creado correctamente'
+            })
             form.reset()
             router.refresh()
             window.location.reload()
 
         } catch (error) {
             console.log(error)
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al crear el servidor'
+            })
         }
     }
 

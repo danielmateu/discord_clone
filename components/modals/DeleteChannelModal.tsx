@@ -12,11 +12,14 @@ import { useState } from 'react';
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
+import { useToast } from "@/components/ui/use-toast"
+
 
 export const DeleteChannelModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
+    const { toast } = useToast()
     // const params = useParams()
 
     const isModalOpen = isOpen && type === 'delete-channel'
@@ -36,12 +39,20 @@ export const DeleteChannelModal = () => {
             })
 
             await axios.delete(url)
-            onClose()
+            toast({
+                title: 'Canal eliminado',
+                description: 'Tu canal ha sido eliminado correctamente'
+            })
             router.refresh()
             router.push(`/servers/${server?.id}`)
+            onClose()
 
         } catch (error) {
             console.log(error);
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al eliminar el canal'
+            })
         } finally {
             setIsLoading(false)
         }

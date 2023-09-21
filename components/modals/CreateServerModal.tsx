@@ -16,6 +16,7 @@ import { Button } from '../ui/button'
 import { FileUpload } from '../FileUpload'
 import { useRouter } from 'next/navigation'
 import { useModal } from "@/hooks/use-modal-store"
+import { useToast } from "@/components/ui/use-toast"
 
 
 const formSchema = z.object({
@@ -27,6 +28,7 @@ export const CreateServerModal = () => {
 
     const { isOpen, onClose, type } = useModal()
     const router = useRouter()
+    const { toast } = useToast()
 
     const isModalOpen = isOpen && type === 'create-server'
 
@@ -44,12 +46,19 @@ export const CreateServerModal = () => {
         // console.log(values)
         try {
             await axios.post('/api/servers', values)
-
+            toast({
+                title: 'Servidor creado',
+                description: 'Tu servidor ha sido creado correctamente'
+            })
             form.reset()
             router.refresh()
             onClose()
         } catch (error) {
             console.log(error)
+            toast({
+                title: 'Error',
+                description: 'Ha ocurrido un error al crear el servidor'
+            })
         }
     }
 

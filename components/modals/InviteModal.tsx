@@ -13,11 +13,15 @@ import { useOrigin } from "@/hooks/use-origin"
 import { useState } from 'react';
 import axios from "axios"
 
+import { useToast } from "@/components/ui/use-toast"
+
+
 
 export const InviteModal = () => {
 
     const { onOpen, isOpen, onClose, type, data } = useModal()
     const origin = useOrigin()
+    const { toast } = useToast()
 
     const isModalOpen = isOpen && type === 'invite'
     const { server } = data
@@ -30,6 +34,11 @@ export const InviteModal = () => {
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl)
         setCopied(true)
+
+        toast({
+            title: 'Copiado',
+            description: 'Enlace de invitación copiado al portapapeles'
+        })
 
         setTimeout(() => {
             setCopied(false)
@@ -48,6 +57,11 @@ export const InviteModal = () => {
 
         } catch (error) {
             console.log(error);
+            toast({
+                title: 'Error',
+                description: 'No se pudo generar un nuevo enlace de invitación',
+            })
+
         } finally {
             setIsLoading(false)
         }

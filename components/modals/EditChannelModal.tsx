@@ -26,6 +26,8 @@ import { useModal } from "@/hooks/use-modal-store"
 import { ChannelType } from "@prisma/client"
 import { useEffect } from "react"
 
+import { useToast } from "@/components/ui/use-toast"
+
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Se requiere un nombre para el canal' }).refine(name => name !== 'general',
@@ -40,6 +42,7 @@ export const EditChannelModal = () => {
 
     const router = useRouter()
     const params = useParams()
+    const { toast } = useToast()
 
     const { channel, server } = data
 
@@ -73,12 +76,20 @@ export const EditChannelModal = () => {
                 }
             })
             await axios.patch(url, values)
+            toast({
+                title: 'Canal editado',
+                description: 'El canal se ha editado correctamente'
+            })
 
             form.reset()
             router.refresh()
             onClose()
         } catch (error) {
             console.log(error)
+            toast({
+                title: 'Error',
+                description: 'No se pudo editar el canal'
+            })
         }
     }
 
