@@ -26,7 +26,6 @@ export const ServerChannel = ({
 
     const params = useParams()
     const router = useRouter()
-
     const Icon = iconMap[channel.type]
 
     return (

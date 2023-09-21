@@ -5,7 +5,6 @@ import { ChannelType, MemberRole } from "@prisma/client"
 import { currentProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
 
-
 import { ServerHeader } from "./ServerHeader"
 import { ScrollArea } from "../ui/scroll-area"
 import { ServerSearch } from "./ServerSearch"
