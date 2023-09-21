@@ -10,15 +10,17 @@ import { Button } from "../ui/button"
 
 import { useState } from 'react';
 import axios from "axios"
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import qs from "query-string";
 
 export const DeleteChannelModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
+    // const params = useParams()
 
     const isModalOpen = isOpen && type === 'delete-channel'
-    const { channel } = data
+    const { server, channel } = data
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -26,10 +28,17 @@ export const DeleteChannelModal = () => {
         try {
             setIsLoading(true)
 
-            await axios.delete(`/api/channels/${channel?.id}`)
+            const url = qs.stringifyUrl({
+                url: `/api/channels/${channel?.id}`,
+                query: {
+                    serverId: server?.id
+                }
+            })
+
+            await axios.delete(url)
             onClose()
             router.refresh()
-            router.push('/')
+            router.push(`/servers/${server?.id}`)
 
         } catch (error) {
             console.log(error);
@@ -48,7 +57,7 @@ export const DeleteChannelModal = () => {
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
                         ¿Estás seguro de que quieres eliminar el canal? <br />
-                        <span className="font-semibold text-indigo-500">{channel?.name}</span> será eliminado permanentemente.
+                        <span className="font-semibold text-indigo-500">#{channel?.name}</span> será eliminado permanentemente.
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="bg-gray-100 px-6 py-4">
