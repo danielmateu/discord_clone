@@ -11,6 +11,7 @@ import { ServerSearch } from "./ServerSearch"
 import { Separator } from "../ui/separator"
 import { ServerSection } from "./ServerSection"
 import { ServerChannel } from "./ServerChannel"
+import { ServerMember } from "./ServerMember"
 
 interface ServerSidebarProps {
     serverId: string
@@ -131,14 +132,77 @@ export const ServerSidebar = async ({
                             role={role}
                             label="Canales de Texto"
                         />
-                        {textChannels.map((channel) => (
-                            <ServerChannel
-                                key={channel.id}
-                                channel={channel}
-                                server={server}
-                            />
-                        ))}
+                        <div className="space-y-1">
+                            {textChannels.map((channel) => (
+                                <ServerChannel
+                                    key={channel.id}
+                                    channel={channel}
+                                    server={server}
+                                    role={role}
+                                />
+                            ))}
+                        </div>
 
+                    </div>
+                )}
+                {!!audioChannels?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="channels"
+                            channelType={ChannelType.AUDIO}
+                            role={role}
+                            label="Canales de Voz"
+                        />
+                        <div className="space-y-1">
+                            {audioChannels.map((channel) => (
+                                <ServerChannel
+                                    key={channel.id}
+                                    channel={channel}
+                                    server={server}
+                                    role={role}
+                                />
+                            ))}
+                        </div>
+
+                    </div>
+                )}
+                {!!videoChannels?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="channels"
+                            channelType={ChannelType.VIDEO}
+                            role={role}
+                            label="Canales de Video"
+                        />
+                        <div className="space-y-1">
+                            {videoChannels.map((channel) => (
+                                <ServerChannel
+                                    key={channel.id}
+                                    channel={channel}
+                                    server={server}
+                                    role={role}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {!!members?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="members"
+                            role={role}
+                            label="Miembros"
+                            server={server}
+                        />
+                        <div className="space-y-1">
+                            {members.map((member) => (
+                                <ServerMember
+                                    key={member.id}
+                                    member={member}
+                                    server={server}
+                                />
+                            ))}
+                        </div>
                     </div>
                 )}
             </ScrollArea>
