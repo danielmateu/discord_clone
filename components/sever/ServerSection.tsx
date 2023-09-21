@@ -35,7 +35,7 @@ export const ServerSection = ({
                     side="right"
                 >
                     <button
-                        onClick={() => onOpen('create-channel')}
+                        onClick={() => onOpen('create-channel', { channelType })}
                         className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300">
                         <Plus className="h-4 w-4" />
                     </button>
