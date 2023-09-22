@@ -14,7 +14,6 @@ import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
 import { useToast } from "@/components/ui/use-toast"
 
-
 export const DeleteChannelModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()

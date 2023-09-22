@@ -1,6 +1,5 @@
 'use client'
 
-
 import { useForm } from "react-hook-form"
 import { useToast } from "@/components/ui/use-toast"
 
@@ -19,7 +18,6 @@ import { FileUpload } from '../FileUpload'
 import { useRouter } from 'next/navigation'
 import { useModal } from "@/hooks/use-modal-store"
 import { useEffect, useState } from "react"
-
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Se requiere un nombre para el servidor ' }),

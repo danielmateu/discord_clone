@@ -15,8 +15,6 @@ import axios from "axios"
 
 import { useToast } from "@/components/ui/use-toast"
 
-
-
 export const InviteModal = () => {
 
     const { onOpen, isOpen, onClose, type, data } = useModal()

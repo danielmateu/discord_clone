@@ -17,13 +17,10 @@ import { Button } from '../ui/button'
 import { FileUpload } from '../FileUpload'
 import { useRouter } from 'next/navigation'
 
-
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Se requiere un nombre para el servidor ' }),
     imageUrl: z.string().min(1, { message: 'Se requiere una imagen para el servidor ' })
 })
-
-
 
 export const InitialModal = () => {
 

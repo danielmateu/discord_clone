@@ -31,8 +31,6 @@ export const CreateServerModal = () => {
     const router = useRouter()
     const { toast } = useToast()
 
-
-
     const isModalOpen = isOpen && type === 'create-server'
 
     const [isMounted, setIsMounted] = useState(false)

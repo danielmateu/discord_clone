@@ -32,8 +32,6 @@ import { useRouter } from 'next/navigation';
 
 import { useToast } from "@/components/ui/use-toast"
 
-
-
 const roleIconMap = {
     'GUEST': null,
     'MODERATOR': <ShieldCheck className="w-4 h-4 ml-2 text-indigo-500" />,

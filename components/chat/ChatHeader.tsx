@@ -1,3 +1,5 @@
+'use client'
+
 import { Hash, Menu } from "lucide-react"
 import { MobileToggle } from "../mobile-toggle"
 import { UserAvatar } from "../UserAvatar"

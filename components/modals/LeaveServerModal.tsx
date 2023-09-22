@@ -13,7 +13,6 @@ import axios from "axios"
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast"
 
-
 export const LeaveServerModal = () => {
 
     const { isOpen, onClose, type, data } = useModal()
