@@ -50,12 +50,29 @@ export const LeaveServerModal = () => {
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
-                    <DialogTitle className="text-2xl text-center font-semibold">
-                        Salir del servidor
-                    </DialogTitle>
-                    <DialogDescription className="text-center text-zinc-500">
-                        ¿Estás seguro de que quieres salir del servidor <span className="font-semibold text-indigo-500">{server?.name}</span>?
-                    </DialogDescription>
+                    {
+                        !isLoading && (
+                            <>
+                                <DialogTitle className="text-2xl text-center font-semibold">
+                                    Salir del servidor
+                                </DialogTitle>
+                                <DialogDescription className="text-center text-zinc-500">
+                                    ¿Estás seguro de que quieres salir del servidor <span className="font-semibold text-indigo-500">{server?.name}</span>?
+                                </DialogDescription>
+                            </>
+                        )
+                    }
+                    {
+                        isLoading && (
+                            <>
+                                <p className="text-center">Abandonando el servidor <span className="font-semibold text-indigo-500">{server?.name}</span></p>
+                                <div className="spinner">
+                                    <div className="double-bounce1"></div>
+                                    <div className="double-bounce2"></div>
+                                </div>
+                            </>
+                        )
+                    }
                 </DialogHeader>
                 <DialogFooter className="bg-gray-100 px-6 py-4">
                     <div className="flex items-center justify-between w-full">

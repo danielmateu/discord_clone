@@ -24,7 +24,7 @@ import { Button } from '../ui/button'
 import { useParams, useRouter } from 'next/navigation'
 import { useModal } from "@/hooks/use-modal-store"
 import { ChannelType } from "@prisma/client"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import { useToast } from "@/components/ui/use-toast"
 
@@ -43,6 +43,7 @@ export const CreateChannelModal = () => {
     const router = useRouter()
     const params = useParams()
     const { toast } = useToast()
+
 
     const { channelType } = data
 

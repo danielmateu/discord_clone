@@ -71,12 +71,27 @@ export const InviteModal = () => {
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
-                    <DialogTitle className="text-2xl text-center font-semibold">
-                        Invita a tus amigos
-                    </DialogTitle>
-                    {/* <DialogDescription className="text-center text-zinc-500">
-                        Invita a un amigo a unirse a tu servidor
-                    </DialogDescription> */}
+                    {
+                        !isLoading && (
+                            <>
+                                <DialogTitle className="text-2xl text-center font-semibold">
+                                    Invita a tus amigos
+                                </DialogTitle>
+                            </>
+                        )
+                    }
+                    {
+                        isLoading && (
+                            <>
+                                <p className="text-center">Generando enlace para el servidor<span className="font-semibold text-indigo-500">{server?.name}</span></p>
+                                <div className="spinner">
+                                    <div className="double-bounce1"></div>
+                                    <div className="double-bounce2"></div>
+                                </div>
+                            </>
+
+                        )
+                    }
                 </DialogHeader>
                 <div className="p-6">
                     <Label className="uppercase text-xs font-semibold text-zinc-500 dark:text-secondary/70">
