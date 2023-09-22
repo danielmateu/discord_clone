@@ -71,64 +71,84 @@ export const CreateServerModal = () => {
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
-                    <DialogTitle className="text-2xl text-center font-semibold">
-                        Crea tu propio servidor
-                    </DialogTitle>
-                    <DialogDescription className="text-center text-zinc-500">
-                        Personaliza tu servidor con un nombre y un icono. Puedes cambiarlos más tarde.
-                    </DialogDescription>
+                    {
+                        !isLoading ? (
+                            <>
+                                <DialogTitle className="text-2xl text-center font-semibold">
+                                    Crea tu propio servidor
+                                </DialogTitle>
+                                <DialogDescription className="text-center text-zinc-500">
+                                    Personaliza tu servidor con un nombre y un icono. Puedes cambiarlos más tarde.
+                                </DialogDescription>
+                            </>
+                        ) : (
+                            <DialogTitle className="text-2xl text-center font-semibold">
+                                Estamos creando tu servidor
+                            </DialogTitle>
+                        )
+                    }
                 </DialogHeader>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
-                        <div className="space-y-8 px-6">
-                            <div className="flex items-center justify-center text-center">
-                                <FormField
-                                    control={form.control}
-                                    name='imageUrl'
-                                    render={({ field, formState }) => (
-                                        <FormItem>
-                                            <FormControl>
-                                                <FileUpload
-                                                    endpoint='serverImage'
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
+                {
+                    !isLoading ? (
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+                                <div className="space-y-8 px-6">
+                                    <div className="flex items-center justify-center text-center">
+                                        <FormField
+                                            control={form.control}
+                                            name='imageUrl'
+                                            render={({ field, formState }) => (
+                                                <FormItem>
+                                                    <FormControl>
+                                                        <FileUpload
+                                                            endpoint='serverImage'
+                                                            value={field.value}
+                                                            onChange={field.onChange}
+                                                        />
+                                                    </FormControl>
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
 
-                            <FormField
-                                control={form.control}
-                                name='name'
-                                render={({ field, formState }) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            Nombre del servidor
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                disabled={isLoading}
-                                                className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                placeholder='Introduce el nombre de tu servidor'
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                                    <FormField
+                                        control={form.control}
+                                        name='name'
+                                        render={({ field, formState }) => (
+                                            <FormItem>
+                                                <FormLabel
+                                                    className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
+                                                >
+                                                    Nombre del servidor
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={isLoading}
+                                                        className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
+                                                        placeholder='Introduce el nombre de tu servidor'
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <DialogFooter className="bg-gray-100 px-6 py-4">
+                                    <Button disabled={isLoading} variant='primary'>
+                                        Crear
+                                    </Button>
+                                </DialogFooter>
+                            </form>
+                        </Form>
+
+                    ) : (
+                        <div className="spinner">
+                            <div className="double-bounce1"></div>
+                            <div className="double-bounce2"></div>
                         </div>
-                        <DialogFooter className="bg-gray-100 px-6 py-4">
-                            <Button disabled={isLoading} variant='primary'>
-                                Crear
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </Form>
+                    )
+                }
             </DialogContent>
         </Dialog>
     )

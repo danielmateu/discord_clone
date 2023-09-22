@@ -1,10 +1,15 @@
 'use client'
 
+import { ChannelType } from "@prisma/client"
+
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import qs from 'query-string'
-import axios from 'axios'
-import * as z from 'zod'
+import { useParams, useRouter } from 'next/navigation'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
+import axios from 'axios'
+import qs from 'query-string'
 
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle }
     from "../ui/dialog"
@@ -18,16 +23,11 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-
-import { Input } from '../ui/input'
-import { Button } from '../ui/button'
-import { useParams, useRouter } from 'next/navigation'
 import { useModal } from "@/hooks/use-modal-store"
-import { ChannelType } from "@prisma/client"
-import { useEffect } from "react"
-
 import { useToast } from "@/components/ui/use-toast"
 
+import { Button } from '../ui/button'
+import { Input } from '../ui/input'
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'Se requiere un nombre para el canal' }).refine(name => name !== 'general',

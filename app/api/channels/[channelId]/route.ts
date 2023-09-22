@@ -1,7 +1,7 @@
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 import { MemberRole } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
 
 export async function DELETE(
     req: Request,
@@ -47,6 +47,7 @@ export async function DELETE(
         return new NextResponse('Internal Error', { status: 500 })
     }
 }
+
 export async function PATCH(
     req: Request,
     { params }: { params: { channelId: string } }
@@ -79,8 +80,8 @@ export async function PATCH(
                     update: {
                         where: {
                             id: params.channelId,
-                            name: {
-                                not: 'general'
+                            NOT: {
+                                name: 'general'
                             }
                         },
                         data: {
