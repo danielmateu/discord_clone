@@ -38,12 +38,12 @@ const formSchema = z.object({
 
 export const CreateChannelModal = () => {
 
+    const [isMounted, setIsMounted] = useState(false)
     const { isOpen, onClose, type, data } = useModal()
 
     const router = useRouter()
     const params = useParams()
     const { toast } = useToast()
-
 
     const { channelType } = data
 
@@ -56,6 +56,9 @@ export const CreateChannelModal = () => {
             type: channelType || ChannelType.TEXT
         }
     })
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     useEffect(() => {
         if (channelType) {
@@ -98,6 +101,8 @@ export const CreateChannelModal = () => {
         form.reset()
         onClose()
     }
+
+    if (!isMounted) return null
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>

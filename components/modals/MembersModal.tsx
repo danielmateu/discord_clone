@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MemberRole } from '@prisma/client';
 
 import { ServerWithMembersWithProfiles } from "@/types"
@@ -51,6 +51,11 @@ export const MembersModal = () => {
     const { server } = data as { server: ServerWithMembersWithProfiles }
 
     const router = useRouter()
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const onKick = async (memberId: string) => {
         try {
@@ -115,6 +120,8 @@ export const MembersModal = () => {
             setLoadingId('')
         }
     }
+
+    if (!isMounted) return null
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>

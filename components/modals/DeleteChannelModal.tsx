@@ -8,7 +8,7 @@ import { useModal } from "@/hooks/use-modal-store"
 
 import { Button } from "../ui/button"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios"
 import { useParams, useRouter } from "next/navigation";
 import qs from "query-string";
@@ -20,12 +20,16 @@ export const DeleteChannelModal = () => {
     const { isOpen, onClose, type, data } = useModal()
     const router = useRouter()
     const { toast } = useToast()
-    // const params = useParams()
+    const [isMounted, setIsMounted] = useState(false)
 
     const isModalOpen = isOpen && type === 'delete-channel'
     const { server, channel } = data
 
     const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const onClick = async () => {
         try {
@@ -59,7 +63,7 @@ export const DeleteChannelModal = () => {
         }
     }
 
-
+    if (!isMounted) return null
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">

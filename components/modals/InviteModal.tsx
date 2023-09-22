@@ -10,7 +10,7 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { Check, Copy, RefreshCcw } from "lucide-react"
 import { useOrigin } from "@/hooks/use-origin"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios"
 
 import { useToast } from "@/components/ui/use-toast"
@@ -26,8 +26,13 @@ export const InviteModal = () => {
     const isModalOpen = isOpen && type === 'invite'
     const { server } = data
 
+    const [isMounted, setIsMounted] = useState(false)
     const [copied, setCopied] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const inviteUrl = `${origin}/invite/${server?.inviteCode}`
 
@@ -66,6 +71,8 @@ export const InviteModal = () => {
             setIsLoading(false)
         }
     }
+
+    if (!isMounted) return null
 
     return (
         <Dialog open={isModalOpen} onOpenChange={onClose}>

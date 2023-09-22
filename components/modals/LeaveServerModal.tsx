@@ -8,7 +8,7 @@ import { useModal } from "@/hooks/use-modal-store"
 
 import { Button } from "../ui/button"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios"
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast"
@@ -22,8 +22,13 @@ export const LeaveServerModal = () => {
 
     const isModalOpen = isOpen && type === 'leave-server'
     const { server } = data
+    const [isMounted, setIsMounted] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const onClick = async () => {
         try {
@@ -44,6 +49,8 @@ export const LeaveServerModal = () => {
             setIsLoading(false)
         }
     }
+
+    if (!isMounted) return null
 
 
     return (

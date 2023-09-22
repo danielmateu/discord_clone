@@ -17,6 +17,7 @@ import { FileUpload } from '../FileUpload'
 import { useRouter } from 'next/navigation'
 import { useModal } from "@/hooks/use-modal-store"
 import { useToast } from "@/components/ui/use-toast"
+import { useEffect, useState } from "react"
 
 
 const formSchema = z.object({
@@ -30,7 +31,15 @@ export const CreateServerModal = () => {
     const router = useRouter()
     const { toast } = useToast()
 
+
+
     const isModalOpen = isOpen && type === 'create-server'
+
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -39,6 +48,7 @@ export const CreateServerModal = () => {
             imageUrl: ''
         }
     })
+
 
     const isLoading = form.formState.isSubmitting
 
@@ -66,6 +76,8 @@ export const CreateServerModal = () => {
         form.reset()
         onClose()
     }
+
+    if (!isMounted) return null
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>

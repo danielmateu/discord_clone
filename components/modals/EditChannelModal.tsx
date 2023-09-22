@@ -2,7 +2,7 @@
 
 import { ChannelType } from "@prisma/client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useParams, useRouter } from 'next/navigation'
 
@@ -47,6 +47,11 @@ export const EditChannelModal = () => {
     const { channel, server } = data
 
     const isModalOpen = isOpen && type === 'edit-channel'
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -55,6 +60,7 @@ export const EditChannelModal = () => {
             type: channel?.type || ChannelType.TEXT
         }
     })
+
 
     useEffect(() => {
         if (channel) {
@@ -97,6 +103,8 @@ export const EditChannelModal = () => {
         form.reset()
         onClose()
     }
+
+    if (!isMounted) return null
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>

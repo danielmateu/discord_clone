@@ -18,7 +18,7 @@ import { Button } from '../ui/button'
 import { FileUpload } from '../FileUpload'
 import { useRouter } from 'next/navigation'
 import { useModal } from "@/hooks/use-modal-store"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 
 const formSchema = z.object({
@@ -35,7 +35,13 @@ export const EditServerModal = () => {
     const { toast } = useToast()
 
     const isModalOpen = isOpen && type === 'edit-server'
+    const [isMounted, setIsMounted] = useState(false)
+
     const { server } = data
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -79,6 +85,8 @@ export const EditServerModal = () => {
         form.reset()
         onClose()
     }
+
+    if (!isMounted) return null
 
     return (
         <Dialog open={isModalOpen} onOpenChange={handleClose}>
