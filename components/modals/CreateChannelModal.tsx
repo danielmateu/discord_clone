@@ -1,4 +1,4 @@
-'use client'
+
 
 import { useForm } from "react-hook-form"
 import qs from 'query-string'

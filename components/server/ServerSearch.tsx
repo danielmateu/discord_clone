@@ -10,8 +10,7 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-    CommandSeparator,
-    CommandShortcut,
+
 } from "@/components/ui/command"
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -61,7 +60,6 @@ export const ServerSearch = ({
             return router.push(`/servers/${params?.serverId}/channels/${id}`)
         }
     }
-
 
     return (
         <>
