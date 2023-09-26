@@ -25,6 +25,7 @@
 14. Socket.io CLient
 
 15. emoji-mart @emoji-mart/data @emoji-mart/react
+16. @tanstack/react-query
 
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
 https://github.com/AntonioErdeljac/next13-discord-clone
@@ -34,7 +35,6 @@ https://github.com/AntonioErdeljac/next13-discord-clone
 1. const [isMounted, setIsMounted] = useState(false)
 
 2. useEffect(() => {
-        setIsMounted(true)
-    }, [])
-    
+   setIsMounted(true)
+   }, [])
 3. if (!isMounted) return null

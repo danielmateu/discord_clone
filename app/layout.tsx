@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { ModalProvider } from '@/components/providers/modal-provider'
 import { SocketProvider } from '@/components/providers/socket-provider'
+import { QueryProvider } from '@/components/providers/query-provider'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -29,18 +30,20 @@ export default function RootLayout({
         <body className={cn(font.className,
           "bg-white dark:bg-[#313338]"
         )}>
-          <SocketProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem={false}
-              storageKey='discord-theme'
-            >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey='discord-theme'
+          >
+            <SocketProvider>
               <ModalProvider />
-              {children}
-              <Toaster />
-            </ThemeProvider>
-          </SocketProvider>
+              <QueryProvider>
+                <Toaster />
+                {children}
+              </QueryProvider>
+            </SocketProvider>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
