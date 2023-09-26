@@ -18,6 +18,8 @@ import qs from 'query-string'
 import { ActionTooltip } from '../ActionTooltip'
 import { useToast } from '../ui/use-toast'
 import { useModal } from '@/hooks/use-modal-store'
+import { EmojiPicker } from '../EmojiPicker'
+import { useRouter } from 'next/navigation'
 
 interface ChatInputProps {
     apiUrl: string
@@ -49,6 +51,7 @@ export const ChatInput = ({
     const isLoading = form.formState.isSubmitting;
 
     const { toast } = useToast()
+    const router = useRouter()
 
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
@@ -58,12 +61,13 @@ export const ChatInput = ({
             })
 
             await axios.post(url, data)
-            toast({
-                title: 'Mensaje enviado',
-                description: 'Tu mensaje ha sido enviado correctamente',
-                
-            })
+            // toast({
+            //     title: 'Mensaje enviado',
+            //     description: 'Tu mensaje ha sido enviado correctamente',
+
+            // })
             form.reset()
+            router.refresh()
 
         } catch (error) {
             console.log(error);
@@ -106,7 +110,9 @@ export const ChatInput = ({
                                         {...field}
                                     />
                                     <div className="absolute top-7 right-8">
-                                        <Smile />
+                                        <EmojiPicker
+                                            onChange={(emoji: string) => field.onChange(field.value + emoji)}
+                                        />
                                     </div>
                                 </div>
                             </FormControl>
