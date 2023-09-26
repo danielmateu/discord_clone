@@ -1,4 +1,4 @@
-
+'use client'
 
 // import { useRouter } from "next/navigation"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle }
