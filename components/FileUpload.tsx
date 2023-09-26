@@ -1,7 +1,7 @@
 'use client'
 
 import { UploadDropzone } from "@/lib/uploadthing"
-import { X } from 'lucide-react'
+import { FileIcon, X } from 'lucide-react'
 import Image from "next/image"
 
 // import '@uploadthing/react/styles.css'
@@ -43,6 +43,24 @@ export const FileUpload = ({
                         <X className="h-4 w-4" />
                     </button>
                 </ActionTooltip>
+            </div>
+        )
+    }
+
+    // Si el valor es un pdf
+    if (value && fileType === 'pdf') {
+        return (
+            <div className="flex items-center relative p-2 mt-2 rounded-md bg-background/10">
+                <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
+                <a href={value} target="_black" rel="noopener noreferer" className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline">
+                    {value}
+                </a>
+                <button
+                    onClick={() => onChange('')}
+                    className="bg-rose-500 text-white rounded-full absolute top-0 right-0 shadow-sm hover:rotate-90 transition" type="button"
+                >
+                    <X className="h-4 w-4" />
+                </button>
             </div>
         )
     }
