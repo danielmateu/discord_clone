@@ -137,3 +137,5 @@ body,
     -webkit-transform: scale(1.0);
   }
 }
+
+@import "~@uploadthing/react/styles.css";
