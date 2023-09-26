@@ -5,6 +5,7 @@ import { MobileToggle } from "../mobile-toggle"
 import { UserAvatar } from "../UserAvatar"
 import { Socket } from "socket.io"
 import { SocketIndicator } from "../SocketIndicator"
+import { useEffect, useState } from "react"
 
 interface ChatHeaderProps {
     serverId: string
@@ -19,6 +20,14 @@ export const ChatHeader = ({
     type,
     imageUrl
 }: ChatHeaderProps) => {
+
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    if (!isMounted) return null
 
     return (
         <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">

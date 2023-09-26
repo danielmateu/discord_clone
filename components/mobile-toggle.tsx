@@ -12,11 +12,21 @@ import {
 import { Button } from "./ui/button"
 import { NavigationSidebar } from "./navigation/NavigationSidebar"
 import { ServerSidebar } from './server/ServerSidebar';
+import { useEffect, useState } from "react"
 
 
 export const MobileToggle = ({
     serverId,
 }: { serverId: string }) => {
+
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    if (!isMounted) return null
+
     return (
         <Sheet >
             <SheetTrigger>
