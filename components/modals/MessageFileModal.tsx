@@ -20,7 +20,7 @@ import { useModal } from '@/hooks/use-modal-store'
 import qs from "query-string"
 
 const formSchema = z.object({
-    // name: z.string().min(1, { message: 'Se requiere un nombre para el servidor ' }),
+
     fileUrl: z.string().min(1, { message: 'Se requiere archivo' })
 })
 
@@ -110,8 +110,6 @@ export const MessageFileModal = () => {
                                     )}
                                 />
                             </div>
-
-
                         </div>
                         <DialogFooter className="bg-gray-100 px-6 py-4">
                             <Button disabled={isLoading} variant='primary'>

@@ -7,11 +7,8 @@ import * as z from 'zod'
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
-    FormLabel,
-    FormMessage,
 } from "@/components/ui/form"
 
 import { Input } from "@/components/ui/input"
@@ -21,9 +18,6 @@ import qs from 'query-string'
 import { ActionTooltip } from '../ActionTooltip'
 import { useToast } from '../ui/use-toast'
 import { useModal } from '@/hooks/use-modal-store'
-
-
-
 
 interface ChatInputProps {
     apiUrl: string
@@ -64,16 +58,22 @@ export const ChatInput = ({
             })
 
             await axios.post(url, data)
+            toast({
+                title: 'Mensaje enviado',
+                description: 'Tu mensaje ha sido enviado correctamente',
+                
+            })
+            form.reset()
 
         } catch (error) {
             console.log(error);
             toast({
                 title: 'Error',
                 description: 'No se pudo enviar el mensaje',
+
             })
         }
     }
-
 
     return (
         <Form {...form}>
@@ -110,14 +110,9 @@ export const ChatInput = ({
                                     </div>
                                 </div>
                             </FormControl>
-                            {/* <FormDescription>
-                                This is your public display name.
-                            </FormDescription> */}
-                            {/* <FormMessage /> */}
                         </FormItem>
                     )}
                 />
-                {/* <Button type="submit">Submit</Button> */}
             </form>
         </Form >
     )
