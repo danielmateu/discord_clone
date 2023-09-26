@@ -27,6 +27,8 @@
 15. emoji-mart @emoji-mart/data @emoji-mart/react
 16. @tanstack/react-query
 
+17. dat-fns
+
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
 https://github.com/AntonioErdeljac/next13-discord-clone
 
