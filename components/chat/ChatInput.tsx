@@ -18,6 +18,10 @@ import { Input } from "@/components/ui/input"
 import { Plus, Smile } from 'lucide-react'
 import axios from 'axios'
 import qs from 'query-string'
+import { ActionTooltip } from '../ActionTooltip'
+import { useToast } from '../ui/use-toast'
+
+
 
 
 interface ChatInputProps {
@@ -47,6 +51,8 @@ export const ChatInput = ({
 
     const isLoading = form.formState.isSubmitting;
 
+    const { toast } = useToast()
+
     const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
             const url = qs.stringifyUrl({
@@ -58,6 +64,10 @@ export const ChatInput = ({
 
         } catch (error) {
             console.log(error);
+            toast({
+                title: 'Error',
+                description: 'No se pudo enviar el mensaje',
+            })
         }
     }
 
