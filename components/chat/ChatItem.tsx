@@ -5,8 +5,31 @@ import { UserAvatar } from "../UserAvatar"
 import { ActionTooltip } from "../ActionTooltip"
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
+
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+import axios from "axios"
+
+import qs from 'query-string'
+import { useForm } from "react-hook-form"
+import { Button } from "../ui/button"
+
+
 
 interface ChatItemProps {
     id: string
@@ -22,6 +45,10 @@ interface ChatItemProps {
     socketUrl: string
     socketQuery: Record<string, string>
 }
+
+const formSchema = z.object({
+    content: z.string().min(1),
+})
 
 const roleIconMap = {
     "GUEST": null,
@@ -53,6 +80,48 @@ export const ChatItem = ({
 
     const [isEditing, setIsEditing] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        try {
+            const url = qs.stringifyUrl({
+                url: `${socketUrl}/${id}`,
+                query: socketQuery
+            })
+
+            await axios.patch(url, values)
+            form.reset()
+            setIsEditing(false)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            content,
+        }
+    })
+
+    useEffect(() => {
+        const handleKeyDown = (e: any) => {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                setIsEditing(false)
+            }
+        }
+
+        window.addEventListener('keydown', handleKeyDown)
+
+        return () => window.removeEventListener('keydown', handleKeyDown)
+    }, [])
+
+
+    useEffect(() => {
+        form.reset({
+            content,
+        })
+    }, [content, form])
 
     return (
         <div className='relative group flex items-center hover:bg-black/5 p-4 transition w-full'>
@@ -108,6 +177,40 @@ export const ChatItem = ({
                             )}
                         </p>
                     )}
+                    {!fileUrl && isEditing && (
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="flex items-start w-full gap-x-2 pt-2">
+                                <FormField
+                                    control={form.control}
+                                    name="content"
+                                    render={({ field }) => (
+                                        <FormItem
+                                            className="flex-1"
+                                        >
+                                            {/* <FormLabel>Username</FormLabel> */}
+                                            <FormControl>
+                                                <div className="relative w-full">
+                                                    <Input
+                                                        disabled={isLoading}
+                                                        className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none boder-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                                                        placeholder="Editar mensaje" {...field} />
+                                                </div>
+                                            </FormControl>
+                                            <FormDescription>
+                                                Presiona ESC para cancelar, Enter para guardar
+                                            </FormDescription>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button
+                                    disabled={isLoading}
+                                    size='sm' type="submit">
+                                    Guardar
+                                </Button>
+                            </form>
+                        </Form>
+                    )}
                 </div>
                 {canDeleteMessage && (
                     <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
@@ -117,6 +220,7 @@ export const ChatItem = ({
                                 side="left"
                             >
                                 <Edit
+                                    onClick={() => setIsEditing(true)}
                                     className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hvoer:text-zinc-300 transition"
                                 />
                             </ActionTooltip>
