@@ -1,18 +1,15 @@
-'use client'
+import { Hash } from "lucide-react";
 
-import { Hash, Menu } from "lucide-react"
-import { MobileToggle } from "../mobile-toggle"
-import { UserAvatar } from "../UserAvatar"
-import { Socket } from "socket.io"
-import { SocketIndicator } from "../SocketIndicator"
-import { useEffect, useState } from "react"
-import { ChatVideoButton } from "./ChatVideoButton"
+import { MobileToggle } from "@/components/mobile-toggle";
+import { UserAvatar } from "../UserAvatar";
+import { ChatVideoButton } from "./ChatVideoButton";
+import { SocketIndicator } from "../SocketIndicator";
 
 interface ChatHeaderProps {
-    serverId: string
-    name: string
-    type: 'channel' | 'conversation'
-    imageUrl?: string
+    serverId: string;
+    name: string;
+    type: "channel" | "conversation";
+    imageUrl?: string;
 }
 
 export const ChatHeader = ({
@@ -21,25 +18,13 @@ export const ChatHeader = ({
     type,
     imageUrl
 }: ChatHeaderProps) => {
-
-    const [isMounted, setIsMounted] = useState(false)
-
-    useEffect(() => {
-        setIsMounted(true)
-    }, [])
-
-    if (!isMounted) return null
-
     return (
         <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
-            {/* <Menu /> */}
-            <MobileToggle
-                serverId={serverId}
-            />
-            {type === 'channel' && (
+            <MobileToggle serverId={serverId} />
+            {type === "channel" && (
                 <Hash className="w-5 h-5 text-zinc-500 dark:text-zinc-400 mr-2" />
             )}
-            {type === 'conversation' && (
+            {type === "conversation" && (
                 <UserAvatar
                     src={imageUrl}
                     className="h-8 w-8 md:h-8 md:w-8 mr-2"
@@ -49,7 +34,7 @@ export const ChatHeader = ({
                 {name}
             </p>
             <div className="ml-auto flex items-center">
-                {type === 'conversation' && (
+                {type === "conversation" && (
                     <ChatVideoButton />
                 )}
                 <SocketIndicator />
