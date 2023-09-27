@@ -12,7 +12,7 @@ export const NavigationAction = () => {
         <div>
             <ActionTooltip
                 label="Añade un servidor"
-                side="right"
+                side="bottom"
                 align="center"
             >
                 <button
