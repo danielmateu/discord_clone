@@ -28,6 +28,7 @@ import axios from "axios"
 import qs from 'query-string'
 import { useForm } from "react-hook-form"
 import { Button } from "../ui/button"
+import { useModal } from "@/hooks/use-modal-store"
 
 
 
@@ -79,8 +80,9 @@ export const ChatItem = ({
     const isImage = !isPdf && fileUrl
 
     const [isEditing, setIsEditing] = useState(false)
-    const [isDeleting, setIsDeleting] = useState(false)
+    // const [isDeleting, setIsDeleting] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const { onOpen } = useModal()
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
@@ -172,7 +174,7 @@ export const ChatItem = ({
                             {content}
                             {isUpdated && !deleted && (
                                 <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
-                                    (edited)
+                                    (editado)
                                 </span>
                             )}
                         </p>
@@ -230,6 +232,10 @@ export const ChatItem = ({
                             side="top"
                         >
                             <Trash
+                                onClick={() => onOpen('delete-message', {
+                                    apiUrl: `${socketUrl}/${id}`,
+                                    query: socketQuery
+                                })}
                                 className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hvoer:text-zinc-300 transition"
                             />
                         </ActionTooltip>
