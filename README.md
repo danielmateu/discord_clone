@@ -28,6 +28,7 @@
 16. @tanstack/react-query
 
 17. dat-fns
+18. LiveKit
 
 Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
 https://github.com/AntonioErdeljac/next13-discord-clone
