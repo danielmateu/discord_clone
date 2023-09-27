@@ -6,6 +6,7 @@ import { UserAvatar } from "../UserAvatar"
 import { Socket } from "socket.io"
 import { SocketIndicator } from "../SocketIndicator"
 import { useEffect, useState } from "react"
+import { ChatVideoButton } from "./ChatVideoButton"
 
 interface ChatHeaderProps {
     serverId: string
@@ -48,6 +49,9 @@ export const ChatHeader = ({
                 {name}
             </p>
             <div className="ml-auto flex items-center">
+                {type === 'conversation' && (
+                    <ChatVideoButton />
+                )}
                 <SocketIndicator />
             </div>
         </div>
