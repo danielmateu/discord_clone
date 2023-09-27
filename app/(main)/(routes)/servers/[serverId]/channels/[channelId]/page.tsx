@@ -46,6 +46,7 @@ const ChannelIdPage = async ({
                 type="channel"
             />
             <div className="flex-1">Future messages</div>
+
             <ChatMessages
                 member={member}
                 name={channel.name}

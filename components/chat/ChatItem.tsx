@@ -41,11 +41,11 @@ interface ChatItemProps {
     member: Member & {
         profile: Profile
     },
-    timeStamp: string
+    timeStamp?: string
     fileUrl: string | null
     deleted: boolean
     currentMember: Member
-    isUpdated: boolean
+    isUpdated?: boolean
     socketUrl: string
     socketQuery: Record<string, string>
 }

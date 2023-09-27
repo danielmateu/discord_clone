@@ -2,7 +2,7 @@
 
 import { Fragment, useRef, ElementRef } from "react";
 import { format } from "date-fns";
-import { DiscordMessage, Member, Message, Profile } from "@prisma/client";
+import { DiscordMessage, Member, Profile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
@@ -129,8 +129,9 @@ export const ChatMessages = ({
                                 content={message.content}
                                 fileUrl={message.fileUrl}
                                 deleted={message.deleted}
-                                timeStamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                                isUpdated={message.updatedAt !== message.createdAt}
+                                timeStamp={message.createdAt instanceof Date ? format(new Date(message.createdAt), DATE_FORMAT) : ''}
+                                // timeStamp={message.updatedAt ? format(new Date(message.updatedAt), DATE_FORMAT) : format(new Date(message.createdAt), DATE_FORMAT)}
+                                // isUpdated={message.updatedAt !== message.createdAt}
                                 socketUrl={socketUrl}
                                 socketQuery={socketQuery}
                             />
