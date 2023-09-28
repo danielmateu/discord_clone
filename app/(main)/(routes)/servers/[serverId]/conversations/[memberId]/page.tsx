@@ -48,7 +48,7 @@ const MemberIdPage = async ({
 
 
     return (
-        <div className="bg-white dark:bg-[#313338] flex flex-col h-full ml-[72px]">
+        <div className="bg-white dark:bg-[#313338] flex flex-col h-full ml-[72px] md:ml-0">
             <ChatHeader
                 imageUrl={otherMember.profile.imageUrl}
                 name={otherMember.profile.name}
