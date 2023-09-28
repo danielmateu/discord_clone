@@ -11,7 +11,7 @@ export const SocketIndicator = () => {
     if (!isConnected) {
         return (
             <Badge variant={'outline'} className="bg-yellow-500 text-black border-none">
-                Fallback: Polling for updates
+                Desconectado
             </Badge>
         )
 
@@ -19,7 +19,7 @@ export const SocketIndicator = () => {
 
     return (
         <Badge variant={'outline'} className="bg-emerald-500 text-black border-none">
-            Live: Connected
+            Conectado
         </Badge>
     )
 }
