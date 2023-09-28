@@ -1,4 +1,5 @@
 # Discord Clon
+![discord](https://github.com/danielmateu/discord_clone/assets/76947258/cf52e647-edca-4547-ba16-7a6e69fe3b03)
 
 Este es un clon de Discord, una aplicación de chat y voz en tiempo real. Este proyecto está construido con NextJS, TypeScript entre otras librerías.
 
