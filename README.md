@@ -36,6 +36,8 @@ Este es un clon de Discord, una aplicación de chat y voz en tiempo real. Este p
 
 16. @tanstack/react-query: una librería de React que permite realizar solicitudes a una API de manera sencilla y eficiente.
 
+17. LiveKit: LiveKit es una alternativa de código abierto a Twilio Video o Agora. Cree aplicaciones y funciones de audio y video en vivo utilizando una pila WebRTC moderna y de extremo a extremo.
+
 ## Cómo ejecutar el proyecto
 
 Para ejecutar este proyecto, sigue estos pasos:
@@ -58,24 +60,31 @@ npm run dev
 
 5. Abre tu navegador y navega a http://localhost:3000 para ver la aplicación en funcionamiento.
 
-Cómo contribuir
+## Manejo de las variables de Entorno
+
+En el archivo .env.local se muestran las variables de entorno a tener en cuenta para el correcto funcionamiento de la aplicación en modo local. A tener en cuenta que la última variable es la url del deploy final
+
+## Cómo contribuir
 Si deseas contribuir a este proyecto, sigue estos pasos:
 
-Haz un fork de este repositorio.
+1. Haz un fork de este repositorio.
 
-Clona tu fork en tu máquina local.
+2. Clona tu fork en tu máquina local.
 
-Crea una nueva rama para tu contribución:
+3. Crea una nueva rama para tu contribución:
+```
+git checkout -b mi-nueva-funcionalidad
+```
 
-Realiza tus cambios y haz commit de tus cambios:
+4. Realiza tus cambios y haz commit de tus cambios:
 
-Haz push de tus cambios a tu fork:
+5. Haz push de tus cambios a tu fork:
 
-Abre un pull request en este repositorio y describe tus cambios.
+6. Abre un pull request en este repositorio y describe tus cambios.
 
-Espera a que se revise y apruebe tu pull request.
+7. Espera a que se revise y apruebe tu pull request.
 
-Licencia
+## Licencia
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE.md para obtener más información.
 
 ## Librerías instaladas
