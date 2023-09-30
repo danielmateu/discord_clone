@@ -88,6 +88,38 @@ git checkout -b mi-nueva-funcionalidad
 ## Licencia
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE.md para obtener más información.
 
+## Librerías instaladas
+
+1. Tailwind
+2. Shadcn/ui
+3. Clerk
+4. Next-Themes
+5. Prisma
+   npx prisma generate -> Cada vez que modifiquemos el schema prisma
+   npx prisma db push -> Creamos las colecciones en planetscale o mysql gestion
+   npx prisma studio -> Para ver las tablas
+
+6. React Hook Form
+7. uploadthing
+8. react-dropzone
+
+9. Axios
+10. UUID
+
+11. Zustand
+12. Query-String
+
+13. Socket.io
+14. Socket.io CLient
+
+15. emoji-mart @emoji-mart/data @emoji-mart/react
+16. @tanstack/react-query
+
+17. dat-fns
+18. LiveKit
+
+Referencias -> https://www.youtube.com/watch?v=ZbX4Ok9YX94&t=605s
+
 ## To fix Hydration issues
 
 1. const [isMounted, setIsMounted] = useState(false)
@@ -96,5 +128,3 @@ Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE
    setIsMounted(true)
    }, [])
 3. if (!isMounted) return null
-
-### Referencias -> https://www.codewithantonio.com/projects/team-chat-platform
