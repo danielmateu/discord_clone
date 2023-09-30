@@ -65,6 +65,20 @@ npm run dev
 
 En el archivo .env.local se muestran las variables de entorno a tener en cuenta para el correcto funcionamiento de la aplicación en modo local. A tener en cuenta que la última variable es la url del deploy final
 
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=
+DATABASE_URL=
+UPLOADTHING_SECRET=
+UPLOADTHING_APP_ID=
+LIVEKIT_API_KEY=
+LIVEKIT_API_SECRET=
+NEXT_PUBLIC_LIVEKIT_URL=
+NEXT_PUBLIC_SITE_URL=
+
 ## Cómo contribuir
 Si deseas contribuir a este proyecto, sigue estos pasos:
 
